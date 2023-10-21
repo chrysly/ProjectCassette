@@ -20,6 +20,7 @@ public class WebBuilder : MonoBehaviour {
             Vector2 offsetPos = pos + new Vector2(transform.position.x, transform.position.y);
             Web.Instance.PlaceCoil(offsetPos);
         }
+        Web.Instance.InitializeCoils();
     }
 
     void Update() {

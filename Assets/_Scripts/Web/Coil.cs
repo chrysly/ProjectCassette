@@ -1,10 +1,13 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Coil : MonoBehaviour {
 
     [SerializeField] private GameObject wirePrefab;
+    [SerializeField] private int connections = 4;
     
     public Vector2 position => transform.position;
 
@@ -15,18 +18,20 @@ public class Coil : MonoBehaviour {
     }
 
     public void Init() {
-        int radius = 100;
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(position, radius, Vector2.one, 0.001f);
-        for (int i = 0; i < Mathf.Min(hits.Length, 4); i++) {
-            var wire = Instantiate(wirePrefab, hits[i].point, transform.rotation, transform);
-            ConnectWire(wire.GetComponentInChildren<Wire>(true), hits[i].collider.GetComponent<Coil>());
+        int radius = 5;
+        List<Collider2D> hits = new List<Collider2D>(Physics2D.OverlapCircleAll(position, radius));
+        hits.Sort((coll1, coll2) => (int) (Vector3.Distance(coll1.transform.position, transform.position) -
+            Vector3.Distance(coll2.transform.position, transform.position)));
+        for (int i = 0; i < Mathf.Min(hits.Count, connections); i++) {
+            var wire = Instantiate(wirePrefab, hits[i].transform.position, transform.rotation, transform);
+            ConnectWire(wire.GetComponentInChildren<Wire>(true), hits[i].GetComponent<Coil>());
         }
     }
 
     void OnDestroy() => Web.Instance.UnregisterCoil(this);
 
     private void ConnectWire(Wire wire, Coil coil) {
-        if (wires.Count >= 4) return;
+        if (wires.Count >= connections) return;
         wires.Add(wire);
         wire.Init(this, coil);
         wire.OnWireCut += DetachWire;
