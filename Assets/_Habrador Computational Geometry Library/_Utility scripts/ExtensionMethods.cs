@@ -13,7 +13,7 @@ namespace Habrador_Computational_Geometry
         //3d -> 2d
         public static Vector2 XZ(this Vector3 v)
         {
-            return new Vector2(v.x, v.z);
+            return new Vector2(v.x, v.y);
         }
 
         //2d -> 3d where default y is 0f
@@ -28,7 +28,7 @@ namespace Habrador_Computational_Geometry
         //Vector3 - MyVector2
         public static MyVector2 ToMyVector2(this Vector3 v)
         {
-            return new MyVector2(v.x, v.z);
+            return new MyVector2(v.x, v.y);
         }
 
         //Vector2 - MyVector2
@@ -50,9 +50,9 @@ namespace Habrador_Computational_Geometry
         }
 
         //MyVector2 -> Vector3
-        public static Vector3 ToVector3(this MyVector2 v, float yPos = 0f)
+        public static Vector3 ToVector3(this MyVector2 v, float zPos = 0f)
         {
-            return new Vector3(v.x, yPos, v.y);
+            return new Vector3(v.x, v.y, zPos);
         }
 
         //MyVector2 -> Vector2
@@ -62,15 +62,15 @@ namespace Habrador_Computational_Geometry
         }
 
         //MyVector2 -> MyVector3 (2d x is 3d x, 2d y is 3d z)
-        public static MyVector3 ToMyVector3_Yis3D(this MyVector2 v, float yPos = 0f)
+        public static MyVector3 ToMyVector3_Yis3D(this MyVector2 v, float zPos = 0f)
         {
-            return new MyVector3(v.x, yPos, v.y);
+            return new MyVector3(v.x, v.y, zPos);
         }
 
         //MyVector3 -> MyVector2
         public static MyVector2 ToMyVector2(this MyVector3 v)
         {
-            return new MyVector2(v.x, v.z);
+            return new MyVector2(v.x, v.y);
         }
 
 
