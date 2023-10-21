@@ -24,8 +24,8 @@ public class VoronoiGenerator {
         
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                points.Add(new Vector2(i * unitsPerCell + random.Next(0, unitsPerCell),
-                    j * unitsPerCell + random.Next(0, unitsPerCell)));
+                points.Add(new Vector2(i * unitsPerCell + (float) random.NextDouble() * unitsPerCell,
+                    j * unitsPerCell + (float) random.NextDouble() * unitsPerCell));
             }
         }
     }
