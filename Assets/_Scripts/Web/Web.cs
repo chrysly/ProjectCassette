@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class Web : MonoBehaviour {
 
         if (instance != this) {
             instance = this;
-        } else Destroy(this);
+        } else Destroy(gameObject);
     }
 
     public void PlaceCoil(Vector2 coilPos) {
@@ -26,6 +27,8 @@ public class Web : MonoBehaviour {
         Coil coil = coilGO.GetComponentInChildren<Coil>(true);
         RegisterCoil(coil);
     }
+
+    public void InitializeCoils() => coilList.ForEach(coil => coil.Init());
 
     public void RegisterCoil(Coil coil) => coilList.Add(coil);
     public void UnregisterCoil(Coil coil) => coilList.Remove(coil);

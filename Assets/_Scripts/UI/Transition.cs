@@ -4,24 +4,53 @@ using UnityEngine;
 
 public class Transition : MonoBehaviour {
 
+    [SerializeField] private float defaultTransitionTime;
+    private CanvasGroup cg;
+
     private static Transition instance;
     public static Transition Instance;
 
     void Awake() {
+        cg = GetComponent<CanvasGroup>();
+        cg.alpha = 0;
+
+        /// Initialize Singleton;
         if (instance != this) {
             instance = this;
             DontDestroyOnLoad(this);
-        } else Destroy(this);
+        } else Destroy(gameObject);
     }
 
-    void Start()
-    {
-        
+    /// <summary>
+    /// Fade in the transition canvas;
+    /// </summary>
+    /// <param name="density"> Alpha of the canvas image; </param>
+    /// <param name="duration"> Duration of the transition; </param>
+    public void Fade(float density, float duration = -1) => StartCoroutine(_Fade(density, duration));
+
+    private IEnumerator _Fade(float density, float duration = -1) {
+        StopAllCoroutines();
+        duration = ValidateDuration(duration);
+        while (cg.alpha != density) {
+            Mathf.MoveTowards(cg.alpha, density, Time.unscaledDeltaTime * duration);
+            yield return null;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    /// <summary>
+    /// Fade out the transition canvas;
+    /// </summary>
+    /// <param name="duration"> Duration of the transition; </param>
+    public void Clear(float duration = -1) => StartCoroutine(_Clear(duration));
+
+    private IEnumerator _Clear(float duration = -1) {
+        StopAllCoroutines();
+        duration = ValidateDuration(duration);
+        while (cg.alpha != 0) {
+            Mathf.MoveTowards(cg.alpha, 0, Time.unscaledDeltaTime * duration);
+            yield return null;
+        }
     }
+
+    private float ValidateDuration(float duration) => duration > 0 ? duration : 1;
 }
