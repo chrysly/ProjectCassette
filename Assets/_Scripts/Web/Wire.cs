@@ -7,15 +7,7 @@ public class Wire : MonoBehaviour {
     private LineRenderer lr;
     public event System.Action<Wire> OnWireCut;
 
-    public struct Coils {
-        public Coil coil1;
-        public Coil coil2;
-
-        public Coils(Coil coil1, Coil coil2) {
-            this.coil1 = coil1;
-            this.coil2 = coil2;
-        }
-    } public Coils coils { get; private set; }
+    public Coils coils { get; private set; }
 
     void Awake() {
         lr = GetComponent<LineRenderer>();
@@ -29,5 +21,16 @@ public class Wire : MonoBehaviour {
     public void Init(Coil coil1, Coil coil2) {
         coils = new Coils(coil1, coil2);
         lr.SetPositions(new Vector3[] { coil1.position, coil2.position } );
+        Web.Instance.RegisterWire(this);
+    }
+}
+
+public struct Coils {
+    public Coil coil1;
+    public Coil coil2;
+
+    public Coils(Coil coil1, Coil coil2) {
+        this.coil1 = coil1;
+        this.coil2 = coil2;
     }
 }

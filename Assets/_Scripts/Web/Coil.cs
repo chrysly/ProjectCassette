@@ -11,31 +11,37 @@ public class Coil : MonoBehaviour {
     [SerializeField] private int connections = 4;
     
     public Vector2 position => transform.position;
+    public string posKey => transform.position.Precise();
 
     private List<Wire> wires;
-
-    private Coil[] connectionPoints;
+    public bool Full => wires.Count >= connections;
 
     void Awake() {
         wires = new List<Wire>();
     }
 
-    public void Init(Coil[] connectionPoints) {
-        for (int i = 0; i < connectionPoints.Length; i++) {
-            var wire = Instantiate(wirePrefab, connectionPoints[i].transform.position, transform.rotation, transform);
-            ConnectWire(wire.GetComponentInChildren<Wire>(true), connectionPoints[i]);
-        }
-    }
-
     void OnDestroy() => Web.Instance.UnregisterCoil(this);
 
-    private void ConnectWire(Wire wire, Coil coil) {
-        if (wires.Count >= connections) return;
+    public void ConnectWire(Wire wire) {
         wires.Add(wire);
-        wire.Init(this, coil);
         wire.OnWireCut += DetachWire;
-        Web.Instance.RegisterWire(wire);
     }
 
-    private void DetachWire(Wire wire) => wires.Remove(wire);
+    public void ConnectCoil(Coil coil) {
+        if (Full || coil.Full) return;
+        var wireGO = Instantiate(wirePrefab, position, transform.rotation, transform);
+        Wire wire = wireGO.GetComponentInChildren<Wire>(true);
+        wire.Init(this, coil);
+        ConnectWire(wire);
+        coil.ConnectWire(wire);
+    }
+
+    private void DetachWire(Wire wire) {
+        wires.Remove(wire);
+        DeleteIfDisconnected();
+    }
+
+    public void DeleteIfDisconnected() {
+        if (wires.Count == 0) Destroy(gameObject);
+    }
 }

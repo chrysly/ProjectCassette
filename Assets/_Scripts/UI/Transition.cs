@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Transition : MonoBehaviour {
 
     [SerializeField] private float defaultTransitionTime;
     private CanvasGroup cg;
+
+    public enum Level {
+        MainMenu = 0,
+        Game = 1,
+    } public event System.Action<Level> OnLevelTransition;
 
     private static Transition instance;
     public static Transition Instance;
@@ -19,6 +25,13 @@ public class Transition : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(this);
         } else Destroy(gameObject);
+    }
+
+    public void TransitionToLevel(Level level) => TransitionToLevel((int) level);
+
+    public void TransitionToLevel(int levelIndex) {
+        OnLevelTransition?.Invoke((Level) levelIndex);
+        SceneManager.LoadScene(levelIndex);
     }
 
     /// <summary>

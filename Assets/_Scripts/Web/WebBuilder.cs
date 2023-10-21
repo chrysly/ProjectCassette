@@ -13,16 +13,21 @@ public class WebBuilder : MonoBehaviour {
     /// </summary>
     private void Generate() {
         VoronoiGenerator noise = new VoronoiGenerator(webSize, webDensity);
-        Polygon2D polygon = Polygon2D.Contour(noise.points.ToArray());
+        Polygon2D polygon = Polygon2D.ConvexHull(noise.points.ToArray());
         Triangulation2D triangulation = new Triangulation2D(polygon, 22.5f);
-        
+        Mesh mesh = triangulation.Build();
+        var GO = new GameObject();
+        var f = GO.AddComponent<MeshFilter>();
+        GO.AddComponent<MeshRenderer>();
+        f.mesh = mesh;
+
         GenerateWeb(triangulation.Triangles);
     }
 
     private void GenerateWeb(Triangle2D[] pointArr) {
         foreach (Triangle2D pos in pointArr) {
             //Pass TRIANGLE2D into web, initialize coils using points and 
-            Web.Instance.PlaceCoil(pos);
+            Web.Instance.PlaceCoils(pos);
         }
         //Web.Instance.InitializeCoils();
     }
