@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using mattatz.Triangulation2DSystem;
 using UnityEngine;
 
 public class Web : MonoBehaviour {
@@ -22,13 +23,25 @@ public class Web : MonoBehaviour {
         } else Destroy(gameObject);
     }
 
-    public void PlaceCoil(Vector2 coilPos) {
-        GameObject coilGO = Instantiate(coilPrefab, coilPos, transform.rotation, transform);
-        Coil coil = coilGO.GetComponentInChildren<Coil>(true);
-        RegisterCoil(coil);
+    public void PlaceCoil(Triangle2D triangle2D) {
+        Vector2 a = triangle2D.a.Coordinate;
+        Vector2 b = triangle2D.b.Coordinate;
+        Vector2 c = triangle2D.c.Coordinate;
+        
+        GameObject coilGOA = Instantiate(coilPrefab, a, transform.rotation, transform);
+        Coil coilA = coilGOA.GetComponentInChildren<Coil>(true);
+        RegisterCoil(coilA);
+        
+        GameObject coilGOB = Instantiate(coilPrefab, a, transform.rotation, transform);
+        Coil coilB = coilGOB.GetComponentInChildren<Coil>(true);
+        RegisterCoil(coilB);
+        
+        GameObject coilGOC = Instantiate(coilPrefab, a, transform.rotation, transform);
+        Coil coilC = coilGOC.GetComponentInChildren<Coil>(true);
+        RegisterCoil(coilC);
     }
 
-    public void InitializeCoils() => coilList.ForEach(coil => coil.Init());
+    public void InitializeCoils(Coil[] coils) {}
 
     public void RegisterCoil(Coil coil) => coilList.Add(coil);
     public void UnregisterCoil(Coil coil) => coilList.Remove(coil);
