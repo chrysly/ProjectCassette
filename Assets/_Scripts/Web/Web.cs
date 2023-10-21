@@ -31,10 +31,10 @@ public class Web : MonoBehaviour {
         return coil;
     }
 
-    public void PlaceCoils(Triangle2D triangle2D) {
-        Vector2 a = triangle2D.a.Coordinate;
-        Vector2 b = triangle2D.b.Coordinate;
-        Vector2 c = triangle2D.c.Coordinate;
+    public void PlaceCoils(Triangle3 triangle2D) {
+        Vector2 a = triangle2D.p1.ToMyVector2().ToVector2();
+        Vector2 b = triangle2D.p2.ToMyVector2().ToVector2();
+        Vector2 c = triangle2D.p3.ToMyVector2().ToVector2();
         InitializeCoils(new[] { a, b, c });
     }
 

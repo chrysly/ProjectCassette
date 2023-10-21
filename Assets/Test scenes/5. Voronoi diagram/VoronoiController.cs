@@ -94,7 +94,6 @@ public class VoronoiController : MonoBehaviour
     //     GenerateDelaunay(sites_2d);
     // }
 
-
     public HashSet<Triangle3> GenerateDelaunay(HashSet<MyVector2> points_2d)
     {
         //Normalize
@@ -147,10 +146,10 @@ public class VoronoiController : MonoBehaviour
 
             //Debug.Log("Circle center: " + circleCenter.x + " " + circleCenter.y);
         }
-        Mesh delaunayMesh = _TransformBetweenDataStructures.Triangles2ToMesh(triangles, true);
+        //Mesh delaunayMesh = _TransformBetweenDataStructures.Triangles2ToMesh(triangles, true);
 
         //Display the delaunay triangles
-        TestAlgorithmsHelpMethods.DisplayMeshEdges(delaunayMesh, Color.black);
+        //TestAlgorithmsHelpMethods.DisplayMeshEdges(delaunayMesh, Color.black);
 
         return triangles_3d;
     }
