@@ -5,6 +5,7 @@ using UnityEngine;
 public class Coil : MonoBehaviour {
 
     [SerializeField] private GameObject wirePrefab;
+    
     public Vector2 position => transform.position;
 
     private List<Wire> wires;

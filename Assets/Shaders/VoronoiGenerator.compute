@@ -3,7 +3,6 @@
 
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
-int cells;
 RWTexture2D<float4> Result;
 
 //Cool random function for shaders I got off the internet
@@ -13,23 +12,8 @@ float random (float2 uv)
 }
 
 [numthreads(8,8,1)]
-void CSMain (uint3 id : SV_DispatchThreadID, int cellCount)
+void CSMain (uint3 id : SV_DispatchThreadID)
 {
-    cells = cellCount;
-    float2 pos[cells];
-
-    int index = 0;
-    for (int i = 0; i < cellCount; i++)
-    {
-        for (int j = 0; j < cellCount; j++)
-        {
-            float2 seed = {i, j};
-            float rand = random(seed);
-            pos[index] = rand;
-            index++;
-        }
-        index++;
-    }
     // TODO: insert actual code here!
 
     Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
