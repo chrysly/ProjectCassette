@@ -215,50 +215,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2120599998
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2120600000}
-  - component: {fileID: 2120599999}
-  m_Layer: 0
-  m_Name: WebBuilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2120599999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120599998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d2e0690f17b8e4799624d475f6ae67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2120600000
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120599998}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6901347, y: -0.14273047, z: 0.114098154}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2599615252367905369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -310,6 +266,14 @@ PrefabInstance:
     - target: {fileID: 6971544373913619741, guid: 56c5f93ec0a35e640b9affaf66548982, type: 3}
       propertyPath: m_Name
       value: WebBuilder
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430790845460168184, guid: 56c5f93ec0a35e640b9affaf66548982, type: 3}
+      propertyPath: webSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430790845460168184, guid: 56c5f93ec0a35e640b9affaf66548982, type: 3}
+      propertyPath: webDensity
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -378,6 +342,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 190737160}
-  - {fileID: 2120600000}
   - {fileID: 3768907452271618490}
   - {fileID: 2599615252367905369}
