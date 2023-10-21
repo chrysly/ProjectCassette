@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Habrador_Computational_Geometry;
+using UnityEditor;
+using Random = UnityEngine.Random;
 
 public class VoronoiController : MonoBehaviour 
 {
@@ -11,33 +15,22 @@ public class VoronoiController : MonoBehaviour
 
     public int numberOfPoints = 20;
 
+    public GameObject pointPrefab;
 
-
-    private void OnDrawGizmos()
-    {
-        //
-        // Init the sites
-        //
-
+    public List<Triangle3> Generate() {
         HashSet<Vector3> sites_3d = GetRandomSites();
-        //HashSet<Vector3> sites_3d = GetCustomSites();
-        //HashSet<Vector3> sites_3d = GetCustomSites2();
-
-        //3d to 2d
         HashSet<MyVector2> sites_2d = new HashSet<MyVector2>();
-
         foreach (Vector3 v in sites_3d)
         {
             sites_2d.Add(v.ToMyVector2());
+            Debug.Log(v.ToMyVector2().x + "," + v.ToMyVector2().y);
         }
-
-
+        
         //Normalize
         Normalizer2 normalizer = new Normalizer2(new List<MyVector2>(sites_2d));
 
         HashSet<MyVector2> randomSites_2d_normalized = normalizer.Normalize(sites_2d);
-
-
+        
         //Generate the voronoi
         HashSet<VoronoiCell2> voronoiCells = _Voronoi.DelaunyToVoronoi(randomSites_2d_normalized);
 
@@ -50,15 +43,59 @@ public class VoronoiController : MonoBehaviour
         DisplayVoronoiCells(voronoiCells);
 
         //Display the sites
-        TestAlgorithmsHelpMethods.DisplayPoints(sites_3d, 0.5f, Color.black);
+        //TestAlgorithmsHelpMethods.DisplayPoints(sites_3d, 0.5f, Color.black);
 
         //Generate delaunay for comparisons
-        GenerateDelaunay(sites_2d);
+        return GenerateDelaunay(sites_2d).ToList();
     }
 
 
+    // private void OnDrawGizmos()
+    // {
+    //     //
+    //     // Init the sites
+    //     //
+    //
+    //     HashSet<Vector3> sites_3d = GetRandomSites();
+    //     //HashSet<Vector3> sites_3d = GetCustomSites();
+    //     //HashSet<Vector3> sites_3d = GetCustomSites2();
+    //
+    //     //3d to 2d
+    //     HashSet<MyVector2> sites_2d = new HashSet<MyVector2>();
+    //
+    //     foreach (Vector3 v in sites_3d)
+    //     {
+    //         sites_2d.Add(v.ToMyVector2());
+    //         Debug.Log(v.ToMyVector2().x + "," + v.ToMyVector2().y);
+    //     }
+    //
+    //
+    //     //Normalize
+    //     Normalizer2 normalizer = new Normalizer2(new List<MyVector2>(sites_2d));
+    //
+    //     HashSet<MyVector2> randomSites_2d_normalized = normalizer.Normalize(sites_2d);
+    //
+    //
+    //     //Generate the voronoi
+    //     HashSet<VoronoiCell2> voronoiCells = _Voronoi.DelaunyToVoronoi(randomSites_2d_normalized);
+    //
+    //
+    //     //Unnormalize
+    //     voronoiCells = normalizer.UnNormalize(voronoiCells);
+    //
+    //
+    //     //Display the voronoi diagram
+    //     DisplayVoronoiCells(voronoiCells);
+    //
+    //     //Display the sites
+    //     TestAlgorithmsHelpMethods.DisplayPoints(sites_3d, 0.5f, Color.black);
+    //
+    //     //Generate delaunay for comparisons
+    //     GenerateDelaunay(sites_2d);
+    // }
 
-    private void GenerateDelaunay(HashSet<MyVector2> points_2d)
+
+    public HashSet<Triangle3> GenerateDelaunay(HashSet<MyVector2> points_2d)
     {
         //Normalize
         Normalizer2 normalizer = new Normalizer2(new List<MyVector2>(points_2d));
@@ -79,7 +116,7 @@ public class VoronoiController : MonoBehaviour
 
         //Make sure they have the correct orientation
         triangles = HelpMethods.OrientTrianglesClockwise(triangles);
-
+        
         //2d to 3d
         HashSet<Triangle3> triangles_3d = new HashSet<Triangle3>();
 
@@ -88,6 +125,13 @@ public class VoronoiController : MonoBehaviour
 
         foreach (Triangle2 t in triangles)
         {
+            //Gizmos.DrawCube(t.p1.ToVector3(), new Vector3(1f, 1f, 1f));
+            //Gizmos.DrawCube(t.p2.ToVector3(), new Vector3(1f, 1f, 1f));
+            //Gizmos.DrawCube(t.p3.ToVector3(), new Vector3(1f, 1f, 1f));
+            Instantiate(pointPrefab, t.p1.ToVector3(), Quaternion.identity);
+            Instantiate(pointPrefab, t.p2.ToVector3(), Quaternion.identity);
+            Instantiate(pointPrefab, t.p3.ToVector3(), Quaternion.identity);
+            
             counter++;
 
             //if (counter != 2)
@@ -103,11 +147,12 @@ public class VoronoiController : MonoBehaviour
 
             //Debug.Log("Circle center: " + circleCenter.x + " " + circleCenter.y);
         }
-
-        Mesh delaunayMesh = _TransformBetweenDataStructures.Triangle3ToCompressedMesh(triangles_3d);
+        Mesh delaunayMesh = _TransformBetweenDataStructures.Triangles2ToMesh(triangles, true);
 
         //Display the delaunay triangles
         TestAlgorithmsHelpMethods.DisplayMeshEdges(delaunayMesh, Color.black);
+
+        return triangles_3d;
     }
 
 
@@ -157,6 +202,10 @@ public class VoronoiController : MonoBehaviour
                 //Gizmos.DrawLine(p2, p3);
                 //Gizmos.DrawLine(p1, p3);
                 //Gizmos.DrawLine(p1, p2);
+                
+                //Gizmos.DrawSphere(p1.ToMyVector3().ToVector3(), 1f);
+                //Gizmos.DrawSphere(p2.ToMyVector3().ToVector3(), 1f);
+                //Gizmos.DrawSphere(p3.ToMyVector3().ToVector3(), 1f);
 
                 //Vector3 lineCenter = (p3 - p2) * 0.5f;
 
@@ -175,7 +224,7 @@ public class VoronoiController : MonoBehaviour
 
             triangleMesh.RecalculateNormals();
 
-            Gizmos.DrawMesh(triangleMesh);
+            //Gizmos.DrawMesh(triangleMesh);
         }
     }
 
@@ -199,9 +248,9 @@ public class VoronoiController : MonoBehaviour
         for (int i = 0; i < numberOfPoints; i++)
         {
             float randomX = Random.Range(min, max);
-            float randomZ = Random.Range(min, max);
+            float randomY = Random.Range(min, max);
 
-            randomSites.Add(new Vector3(randomX, 0f, randomZ));
+            randomSites.Add(new Vector3(randomX, randomY, 0f));
         }
 
         //Points outside of the screen for voronoi which has some cells that are infinite
@@ -209,8 +258,8 @@ public class VoronoiController : MonoBehaviour
 
         //Star shape which will give a better result when a cell is infinite large
         //When using other shapes, some of the infinite cells misses triangles
-        randomSites.Add(new Vector3(0f, 0f, bigSize));
-        randomSites.Add(new Vector3(0f, 0f, -bigSize));
+        randomSites.Add(new Vector3(0f, bigSize, 0f));
+        randomSites.Add(new Vector3(0f, -bigSize, 0f));
         randomSites.Add(new Vector3(bigSize, 0f, 0f));
         randomSites.Add(new Vector3(-bigSize, 0f, 0f));
 
