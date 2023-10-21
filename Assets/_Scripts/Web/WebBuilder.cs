@@ -14,15 +14,6 @@ public class WebBuilder : MonoBehaviour {
     /// Put code to start web here using the GenerateWeb method;
     /// </summary>
     private void Generate() {
-<<<<<<< HEAD
-        // VoronoiGenerator noise = new VoronoiGenerator(webSize, webDensity);
-        // Polygon2D polygon = Polygon2D.Contour(noise.points.ToArray());
-        // Triangulation2D triangulation = new Triangulation2D(polygon, 22.5f);
-
-        List<Triangle3> triangulation = voronoi.Generate();
-        
-        GenerateWeb(triangulation);
-=======
         VoronoiGenerator noise = new VoronoiGenerator(webSize, webDensity);
         Polygon2D polygon = Polygon2D.ConvexHull(noise.points.ToArray());
         Triangulation2D triangulation = new Triangulation2D(polygon, 22.5f);
@@ -33,17 +24,12 @@ public class WebBuilder : MonoBehaviour {
         f.mesh = mesh;
 
         GenerateWeb(triangulation.Triangles);
->>>>>>> main
     }
 
     private void GenerateWeb(List<Triangle3> pointArr) {
         foreach (Triangle3 tri in pointArr) {
-            //Pass TRIANGLE2D into web, initialize coils using points and 
-<<<<<<< HEAD
-            Web.Instance.PlaceCoil(tri);
-=======
+            //Pass TRIANGLE2D into web, initialize coils using points and
             Web.Instance.PlaceCoils(pos);
->>>>>>> main
         }
         //Web.Instance.InitializeCoils();
     }

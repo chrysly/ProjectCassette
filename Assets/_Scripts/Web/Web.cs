@@ -23,25 +23,7 @@ public class Web : MonoBehaviour {
             instance = this;
         } else Destroy(gameObject);
     }
-
-<<<<<<< HEAD
-    public void PlaceCoil(Triangle3 triangle2D) {
-        Vector2 a = triangle2D.p1.ToMyVector2().ToVector2();
-        Vector2 b = triangle2D.p2.ToMyVector2().ToVector2();
-        Vector2 c = triangle2D.p3.ToMyVector2().ToVector2();
-        
-        GameObject coilGOA = Instantiate(coilPrefab, a, transform.rotation, transform);
-        Coil coilA = coilGOA.GetComponentInChildren<Coil>(true);
-        RegisterCoil(coilA);
-        
-        GameObject coilGOB = Instantiate(coilPrefab, a, transform.rotation, transform);
-        Coil coilB = coilGOB.GetComponentInChildren<Coil>(true);
-        RegisterCoil(coilB);
-        
-        GameObject coilGOC = Instantiate(coilPrefab, a, transform.rotation, transform);
-        Coil coilC = coilGOC.GetComponentInChildren<Coil>(true);
-        RegisterCoil(coilC);
-=======
+    
     private Coil PlaceCoil(Vector2 pos) {
         GameObject coilGO = Instantiate(coilPrefab, pos, transform.rotation, transform);
         Coil coil = coilGO.GetComponentInChildren<Coil>(true);
@@ -54,7 +36,6 @@ public class Web : MonoBehaviour {
         Vector2 b = triangle2D.b.Coordinate;
         Vector2 c = triangle2D.c.Coordinate;
         InitializeCoils(new[] { a, b, c });
->>>>>>> main
     }
 
     public void InitializeCoils(Vector2[] posArr) {
