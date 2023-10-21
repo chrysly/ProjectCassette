@@ -7,7 +7,7 @@ public class Coil : MonoBehaviour {
     [SerializeField] private GameObject wirePrefab;
     public Vector2 position => transform.position;
 
-    List<Wire> wires;
+    private List<Wire> wires;
 
     void Awake() {
         wires = new List<Wire>();
@@ -19,12 +19,14 @@ public class Coil : MonoBehaviour {
         }
     }
 
+    void OnDestroy() => Web.Instance.UnregisterCoil(this);
+
     private void ConnectWire(Wire wire) {
         if (wires.Count >= 4) return;
         wires.Add(wire);
+        wire.OnWireCut += DetachWire;
+        Web.Instance.RegisterWire(wire);
     }
 
-    void Update() {
-        
-    }
+    private void DetachWire(Wire wire) => wires.Remove(wire);
 }
