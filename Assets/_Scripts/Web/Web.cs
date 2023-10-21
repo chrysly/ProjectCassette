@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Habrador_Computational_Geometry;
 using mattatz.Triangulation2DSystem;
 using UnityEngine;
 
@@ -23,10 +24,10 @@ public class Web : MonoBehaviour {
         } else Destroy(gameObject);
     }
 
-    public void PlaceCoil(Triangle2D triangle2D) {
-        Vector2 a = triangle2D.a.Coordinate;
-        Vector2 b = triangle2D.b.Coordinate;
-        Vector2 c = triangle2D.c.Coordinate;
+    public void PlaceCoil(Triangle3 triangle2D) {
+        Vector2 a = triangle2D.p1.ToMyVector2().ToVector2();
+        Vector2 b = triangle2D.p2.ToMyVector2().ToVector2();
+        Vector2 c = triangle2D.p3.ToMyVector2().ToVector2();
         
         GameObject coilGOA = Instantiate(coilPrefab, a, transform.rotation, transform);
         Coil coilA = coilGOA.GetComponentInChildren<Coil>(true);
