@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using mattatz.Triangulation2DSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,18 +14,16 @@ public class Coil : MonoBehaviour {
 
     private List<Wire> wires;
 
+    private Coil[] connectionPoints;
+
     void Awake() {
         wires = new List<Wire>();
     }
 
-    public void Init() {
-        int radius = 5;
-        List<Collider2D> hits = new List<Collider2D>(Physics2D.OverlapCircleAll(position, radius));
-        hits.Sort((coll1, coll2) => (int) (Vector3.Distance(coll1.transform.position, transform.position) -
-            Vector3.Distance(coll2.transform.position, transform.position)));
-        for (int i = 0; i < Mathf.Min(hits.Count, connections); i++) {
-            var wire = Instantiate(wirePrefab, hits[i].transform.position, transform.rotation, transform);
-            ConnectWire(wire.GetComponentInChildren<Wire>(true), hits[i].GetComponent<Coil>());
+    public void Init(Coil[] connectionPoints) {
+        for (int i = 0; i < connectionPoints.Length; i++) {
+            var wire = Instantiate(wirePrefab, connectionPoints[i].transform.position, transform.rotation, transform);
+            ConnectWire(wire.GetComponentInChildren<Wire>(true), connectionPoints[i]);
         }
     }
 
