@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using mattatz.Triangulation2DSystem;
 using UnityEngine;
 
 public class WebBuilder : MonoBehaviour {
@@ -12,15 +13,18 @@ public class WebBuilder : MonoBehaviour {
     /// </summary>
     private void Generate() {
         VoronoiGenerator noise = new VoronoiGenerator(webSize, webDensity);
-        GenerateWeb(noise.points);
+        Polygon2D polygon = Polygon2D.Contour(noise.points.ToArray());
+        Triangulation2D triangulation = new Triangulation2D(polygon, 22.5f);
+        
+        GenerateWeb(triangulation.Triangles);
     }
 
-    private void GenerateWeb(List<Vector2> pointArr) {
-        foreach (Vector2 pos in pointArr) {
-            Vector2 offsetPos = pos + new Vector2(transform.position.x, transform.position.y);
-            Web.Instance.PlaceCoil(offsetPos);
+    private void GenerateWeb(Triangle2D[] pointArr) {
+        foreach (Triangle2D pos in pointArr) {
+            //Pass TRIANGLE2D into web, initialize coils using points and 
+            Web.Instance.PlaceCoil(pos);
         }
-        Web.Instance.InitializeCoils();
+        //Web.Instance.InitializeCoils();
     }
 
     void Update() {
