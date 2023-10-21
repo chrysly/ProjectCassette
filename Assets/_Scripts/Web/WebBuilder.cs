@@ -17,8 +17,10 @@ public class WebBuilder : MonoBehaviour {
 
     private void GenerateWeb(List<Vector2> pointArr) {
         foreach (Vector2 pos in pointArr) {
-            Web.Instance.PlaceCoil(pos);
+            Vector2 offsetPos = pos + new Vector2(transform.position.x, transform.position.y);
+            Web.Instance.PlaceCoil(offsetPos);
         }
+        Web.Instance.InitializeCoils();
     }
 
     void Update() {
