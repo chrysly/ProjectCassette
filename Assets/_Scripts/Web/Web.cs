@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Habrador_Computational_Geometry;
 using mattatz.Triangulation2DSystem;
 using UnityEngine;
+using Random = System.Random;
 
 public class Web : MonoBehaviour {
 
@@ -60,6 +61,40 @@ public class Web : MonoBehaviour {
                 || wireMap.ContainsKey(new Coils(coilArr[i], coilArr[clampedIndex]))) continue;
             coilArr[i].ConnectCoil(coilArr[clampedIndex]);
         } foreach (Coil coil in coilArr) coil.DeleteIfDisconnected();
+    }
+
+    public Coil FindRandomValidCoil(Coil playerCoil) {
+        List<Coil> neightborList = new List<Coil>();
+        foreach (Wire wire in playerCoil.wires) {
+            Coil coil1 = wire.coils.coil1;
+            Coil coil2 = wire.coils.coil2;
+            if (coil1 == playerCoil) {
+                neightborList.Add(coil2);
+            }
+            else {
+                neightborList.Add(coil1);
+            }
+        }
+
+        bool foundValidCoil = false;
+        int comparisonMax = coilMap.Values.Count;
+        int comparisons = 0;    //Failsafe for infinite loop
+        while (!foundValidCoil && comparisons < 1000) {
+            Random random = new Random();
+            int index = random.Next(0, comparisonMax);
+            if (!neightborList.Contains(coilMap.Values.ToList()[index])) {
+                return coilMap.Values.ToList()[index];
+            }
+        }
+
+        //Brute force after 1000 failed comparisons
+        foreach (Coil coil in coilMap.Values) {
+            if (!neightborList.Contains(coil)) {
+                return coil;
+            }
+        }
+
+        return null;
     }
 
     public void RegisterCoil(Coil coil) => coilMap[coil.posKey] = coil;
