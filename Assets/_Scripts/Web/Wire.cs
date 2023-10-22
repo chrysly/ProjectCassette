@@ -9,6 +9,7 @@ public class Wire : MonoBehaviour {
     public event System.Action<Wire> OnWireCut;
 
     public Coils coils { get; private set; }
+    public float Distance => Vector2.Distance(coils.coil1.position, coils.coil2.position); 
 
     void Awake() {
         lr = GetComponent<LineRenderer>();
