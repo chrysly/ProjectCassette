@@ -10,6 +10,8 @@ public class Web : MonoBehaviour {
 
     [SerializeField] private GameObject coilPrefab;
 
+    public PlayerController PlayerRef { get; private set; }
+
     public Dictionary<string, Coil> coilMap { get; private set; }
     public Dictionary<Coils, Wire> wireMap { get; private set; }
 
@@ -17,17 +19,23 @@ public class Web : MonoBehaviour {
     public static Web Instance => instance;
 
     void Awake() {
-        coilMap = new Dictionary<string, Coil>();
-        wireMap = new Dictionary<Coils, Wire>();
 
         if (instance != this) {
             instance = this;
         } else Destroy(gameObject);
+
+        coilMap = new Dictionary<string, Coil>();
+        wireMap = new Dictionary<Coils, Wire>();
     }
 
     public void PlaceEntity(Entity entity) {
+        
+    }
+
+    public void PlacePlayer(Player player) {
         Coil[] coils = coilMap.Values.ToArray();
-        entity.Init(coils[UnityEngine.Random.Range(0, coils.Length)]);
+        player.Init(coils[UnityEngine.Random.Range(0, coils.Length)]);
+        PlayerRef = player.GetComponent<PlayerController>();
     }
 
     private Coil PlaceCoil(Vector2 pos) {
