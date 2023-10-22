@@ -7,8 +7,8 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour {
 
     public readonly int MaxHP;
-    public int HP { get; protected set; }
-    public Coil CurrCoil { get; protected set; }
+    public int HP { get; set; }
+    public Coil CurrCoil { get; set; }
 
     protected SpriteRenderer spr;
     protected Color baseColor;
