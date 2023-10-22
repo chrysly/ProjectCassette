@@ -55,7 +55,7 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     - _MaxPixelate: 2500
-    - _Pixelate: 0.911
+    - _Pixelate: 0.902
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
