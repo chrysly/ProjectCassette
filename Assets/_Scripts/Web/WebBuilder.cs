@@ -14,7 +14,7 @@ public class WebBuilder : MonoBehaviour {
     [SerializeField] private int webSize;
     [SerializeField] private int webDensity;
     [SerializeField] private VoronoiController voronoi;
-    private int runs = 0;
+
     /// <summary>
     /// Put code to start web here using the GenerateWeb method;
     /// </summary>

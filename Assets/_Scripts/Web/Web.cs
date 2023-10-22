@@ -29,7 +29,8 @@ public class Web : MonoBehaviour {
     }
 
     public void PlaceEntity(Entity entity) {
-        
+        Coil validCoil = FindRandomValidCoil(PlayerRef.CurrCoil);
+        if (validCoil != null) entity.Init(validCoil);
     }
 
     public void PlacePlayer(Player player) {
