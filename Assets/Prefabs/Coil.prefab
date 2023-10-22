@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wirePrefab: {fileID: 2177496496767192064, guid: cf1e2cab3c6e9b940b49d74f2338bdae, type: 3}
-  connections: 4
+  connections: 10
 --- !u!212 &5718972281963060689
 SpriteRenderer:
   m_ObjectHideFlags: 0
