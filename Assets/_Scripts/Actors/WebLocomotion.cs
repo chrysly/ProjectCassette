@@ -38,14 +38,18 @@ public partial class WebLocomotion : MonoBehaviour {
         } transform.rotation = Quaternion.RotateTowards(transform.rotation, direction, Time.deltaTime * rotationSpeed);
     }
 
-    private void SetAnimationParam(string paramName, bool paramValue) {
+    public void SetAnimationParam(string paramName, bool paramValue) {
         if (!animated) return;
         animator.SetBool(paramName, paramValue);
     }
 
     public void SetTargetCoil(Coil targetCoil) {
         this.targetCoil = targetCoil;
-        direction = Quaternion.LookRotation(Vector3.forward, targetCoil.position - entity.CurrCoil.position);
+        SetDirection(targetCoil.position - entity.CurrCoil.position);
         SetAnimationParam("IsMoving", true);
+    }
+
+    public void SetDirection(Vector2 direction) {
+        this.direction = Quaternion.LookRotation(Vector3.forward, direction);
     }
 }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Wire : MonoBehaviour {
 
+    private int hp;
+    [SerializeField] private GameObject destroyParticleSystem;
+    [SerializeField] private Color[] colorArr;
+    [SerializeField] private Color damageColor;
+    private Color baseColor;
+
     private LineRenderer lr;
     private EdgeCollider2D coll;
     public event System.Action<Wire> OnWireCut;
@@ -14,6 +20,9 @@ public class Wire : MonoBehaviour {
     void Awake() {
         lr = GetComponent<LineRenderer>();
         coll = GetComponent<EdgeCollider2D>();
+        baseColor = colorArr[Random.Range(0, colorArr.Length)];
+        lr.startColor = baseColor;
+        lr.endColor = baseColor;
     }
 
     void OnDestroy() {
@@ -36,6 +45,37 @@ public class Wire : MonoBehaviour {
             Vector2 lrPos = lr.GetPosition(i) - transform.position;
             edges.Add(new Vector2(lrPos.x, lrPos.y));
         } coll.SetPoints(edges);
+    }
+
+    public void SimulateDamage(int dmgVal) => StartCoroutine(_SimulateDamage(dmgVal));
+
+    private IEnumerator _SimulateDamage(int dmgVal) {
+        Color color = lr.startColor;
+        while (color != damageColor) {
+            color = LerpLRColor(color, damageColor);
+            yield return null;
+        } hp -= dmgVal;
+        if (hp <= 0) {
+            GameObject dps = Instantiate(destroyParticleSystem);
+            dps.GetComponent<WireDestroyPS>().Init(lr);
+            Destroy(gameObject);
+        } else {
+            while (color != baseColor) {
+                color = LerpLRColor(color, baseColor);
+                yield return null;
+            }
+        }
+    }
+
+    private Color LerpLRColor(Color color, Color targetColor) {
+        color = Vector4.MoveTowards(color, targetColor, Time.deltaTime * 2f);
+        lr.startColor = color;
+        lr.endColor = color;
+        return color;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.GetComponent<Boss>()) SimulateDamage(3);
     }
 }
 

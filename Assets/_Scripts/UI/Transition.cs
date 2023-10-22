@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Canvas))]
+[RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(UnityEngine.UI.Image))]
 public class Transition : MonoBehaviour {
 
     [SerializeField] private float defaultTransitionTime;
@@ -47,7 +50,8 @@ public class Transition : MonoBehaviour {
         while (cg.alpha != density) {
             Mathf.MoveTowards(cg.alpha, density, Time.unscaledDeltaTime * duration);
             yield return null;
-        }
+        } cg.blocksRaycasts = true;
+        cg.interactable = true;
     }
 
     /// <summary>
@@ -62,7 +66,8 @@ public class Transition : MonoBehaviour {
         while (cg.alpha != 0) {
             Mathf.MoveTowards(cg.alpha, 0, Time.unscaledDeltaTime * duration);
             yield return null;
-        }
+        } cg.blocksRaycasts = false;
+        cg.interactable = false;
     }
 
     private float ValidateDuration(float duration) => duration > 0 ? duration : 1;
