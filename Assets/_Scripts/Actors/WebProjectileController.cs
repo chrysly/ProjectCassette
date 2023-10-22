@@ -7,7 +7,7 @@ using UnityEngine;
 public class WebProjectileController : MonoBehaviour {
     [SerializeField] private GameObject webProjectilePrefab;
     [SerializeField] private int maxFireRate = 50;
-    [SerializeField] private int fireRateGrowth = 1;
+    [SerializeField] private int fireRateGrowth = 2;
     [SerializeField] private float fireUptimeSpeed = 0.1f;
     [SerializeField] private Transform cassette;
     
@@ -26,9 +26,7 @@ public class WebProjectileController : MonoBehaviour {
     void Update()
     {
         CalculateFireRate();
-        if (fireRate > 0) {
-            FireWeb();
-        }
+        FireWeb();
     }
 
     private void FireWeb() {
@@ -36,7 +34,19 @@ public class WebProjectileController : MonoBehaviour {
         mousePosition.z = 0;
         Vector3 aimDirection = (mousePosition - transform.position).normalized;
         cassette.transform.right = aimDirection;
+        if (fireRate > 0) {
+            if (fireAction == null) {
+                fireAction = FireAction();
+                StartCoroutine(fireAction);
+            }
+        }
+    }
+
+    private IEnumerator FireAction() {
         Instantiate(webProjectilePrefab, cassette.position, cassette.rotation);
+        yield return new WaitForSeconds(1f / fireRate);
+        fireAction = null;
+        yield return null;
     }
 
     private void CalculateFireRate() {
@@ -70,7 +80,7 @@ public class WebProjectileController : MonoBehaviour {
         }
         else {
             fireRate -= fireRateGrowth;
-            yield return new WaitForSeconds(fireUptimeSpeed / 5);
+            yield return new WaitForSeconds(fireUptimeSpeed / 2);
         }
         action = null;
         if (fireRate < 0) fireRate = 0;
