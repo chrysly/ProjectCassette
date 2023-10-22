@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Coil))]
 public class CoilButton : MonoBehaviour {
 
+    private bool onStay;
     private Vector2 baseScale;
     private Vector2 targetScale;
 
@@ -18,6 +20,13 @@ public class CoilButton : MonoBehaviour {
             targetScale = 2f * baseScale;
             StopAllCoroutines();
             StartCoroutine(Animate());
+            onStay = true;
+        }
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && onStay) {
+            Web.Instance.PlayerRef.DefineNewPath(GetComponent<Coil>());
         }
     }
 
@@ -27,6 +36,7 @@ public class CoilButton : MonoBehaviour {
             targetScale = baseScale;
             StopAllCoroutines();
             StartCoroutine(Animate());
+            onStay = false;
         }
     }
 

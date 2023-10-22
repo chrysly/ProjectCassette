@@ -22,7 +22,10 @@ public class Roamer : Entity {
         StartCoroutine(ChooseAction());
     }
 
-    private void Roamer_OnTargetReached(Coil target) => StartCoroutine(ChooseAction());
+    private void Roamer_OnTargetReached(Coil target) {
+        CurrCoil = target;
+        StartCoroutine(ChooseAction());
+    }
 
     public IEnumerator ChooseAction() {
         var choice = Random.Range(0, 3);
@@ -43,8 +46,8 @@ public class Roamer : Entity {
     }
 
     protected Coil ChooseTarget(Coil currCoil) {
-        var wireList = currCoil.wires.Select(wire => (new[] { wire.coils.coil1, wire.coils.coil2 }).First(coil => coil != currCoil)).ToList();
-        var targetCoil = wireList[Random.Range(0, currCoil.wires.Count)];
+        var coilList = currCoil.wires.Select(wire => (new[] { wire.coils.coil1, wire.coils.coil2 }).First(coil => coil != currCoil)).ToList();
+        var targetCoil = coilList[Random.Range(0, coilList.Count)];
         return targetCoil;
     }
 }

@@ -37,8 +37,14 @@ public class WebBuilder : MonoBehaviour {
         foreach (Triangle3 tri in pointArr) {
             //Pass TRIANGLE2D into web, initialize coils using points and
             Web.Instance.PlaceCoils(tri);
-        } GameObject playerGO = Instantiate(player, transform.position, transform.rotation, Web.Instance.transform);
-        Web.Instance.PlaceEntity(playerGO.GetComponent<Player>());
+        } PlaceEntities();
+    }
+
+    private void PlaceEntities() {
+        /// Place Player;
+        GameObject playerGO = Instantiate(player, transform.position, transform.rotation);
+        Web.Instance.PlacePlayer(playerGO.GetComponent<Player>());
+        /// Place Roamers;
         for (int i = 0; i < roamerCount; i++) {
             GameObject roamerGO = Instantiate(roamer, transform.position, transform.rotation, Web.Instance.transform);
             Web.Instance.PlaceEntity(roamerGO.GetComponent<Roamer>());
