@@ -15,7 +15,7 @@ public class VoronoiController : MonoBehaviour
 
     public int numberOfPoints = 20;
 
-    public GameObject pointPrefab;
+    //public GameObject pointPrefab;
 
     public List<Triangle3> Generate() {
         HashSet<Vector3> sites_3d = GetRandomSites();
@@ -127,9 +127,9 @@ public class VoronoiController : MonoBehaviour
             //Gizmos.DrawCube(t.p1.ToVector3(), new Vector3(1f, 1f, 1f));
             //Gizmos.DrawCube(t.p2.ToVector3(), new Vector3(1f, 1f, 1f));
             //Gizmos.DrawCube(t.p3.ToVector3(), new Vector3(1f, 1f, 1f));
-            Instantiate(pointPrefab, t.p1.ToVector3(), Quaternion.identity);
-            Instantiate(pointPrefab, t.p2.ToVector3(), Quaternion.identity);
-            Instantiate(pointPrefab, t.p3.ToVector3(), Quaternion.identity);
+            //Instantiate(pointPrefab, t.p1.ToVector3(), Quaternion.identity);
+            //Instantiate(pointPrefab, t.p2.ToVector3(), Quaternion.identity);
+            //Instantiate(pointPrefab, t.p3.ToVector3(), Quaternion.identity);
             
             counter++;
 
