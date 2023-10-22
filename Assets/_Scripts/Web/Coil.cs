@@ -9,15 +9,18 @@ public class Coil : MonoBehaviour {
 
     [SerializeField] private GameObject wirePrefab;
     [SerializeField] private int connections = 4;
+
+    public WebNode node;
     
     public Vector2 position => transform.position;
     public string posKey => transform.position.Precise();
 
-    private List<Wire> wires;
+    public List<Wire> wires;
     public bool Full => wires.Count >= connections;
 
     void Awake() {
         wires = new List<Wire>();
+        node = new WebNode(this);
     }
 
     void OnDestroy() => Web.Instance.UnregisterCoil(this);
