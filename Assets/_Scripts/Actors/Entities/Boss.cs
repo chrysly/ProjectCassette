@@ -12,7 +12,7 @@ public class Boss : Entity {
     }
 
     void Start() {
-        //locomotion.SetAnimationParam("IsMoving", true);
+        locomotion.SetAnimationParam("IsMoving", true);
     }
 
     void Update() {
@@ -23,10 +23,10 @@ public class Boss : Entity {
     public static Vector2 RandomizeBossSpawn() {
         int scenario = Random.Range(0, 4);
         var res = scenario switch {
-            1 => new Vector2(-100, Random.Range(-50, 50)),
-            2 => new Vector2(Random.Range(-50, 50), 100),
-            3 => new Vector2(Random.Range(-50, 50), -100),
-            _ => new Vector2(100, Random.Range(-50, 50)),
+            1 => new Vector2(-50, Random.Range(-25, 25)),
+            2 => new Vector2(Random.Range(-25, 25), 25),
+            3 => new Vector2(Random.Range(-25, 25), -25),
+            _ => new Vector2(50, Random.Range(-25, 25)),
         }; return res;
     }
 }
