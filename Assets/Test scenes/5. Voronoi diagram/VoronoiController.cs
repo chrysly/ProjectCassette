@@ -23,7 +23,7 @@ public class VoronoiController : MonoBehaviour
         foreach (Vector3 v in sites_3d)
         {
             sites_2d.Add(v.ToMyVector2());
-            Debug.Log(v.ToMyVector2().x + "," + v.ToMyVector2().y);
+            //Debug.Log(v.ToMyVector2().x + "," + v.ToMyVector2().y);
         }
         
         //Normalize
