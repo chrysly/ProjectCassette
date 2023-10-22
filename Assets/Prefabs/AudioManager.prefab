@@ -308,12 +308,8 @@ MonoBehaviour:
   secondaryMusicSource: {fileID: 7406230316761894268}
   musicClips:
   - name: Exploration
-    clip: {fileID: 0}
-  - name: Combat
-    clip: {fileID: 0}
-  sfxClips:
-  - name: Break Web
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: cb7f465294a22a149aed79b51ff02b77, type: 3}
+  sfxClips: []
 --- !u!1 &9123600322383892861
 GameObject:
   m_ObjectHideFlags: 0

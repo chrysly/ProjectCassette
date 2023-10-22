@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6610422065706772589}
   - component: {fileID: 1472454789663581272}
   - component: {fileID: 8055795557845763377}
-  - component: {fileID: 679492563837963341}
+  - component: {fileID: -3849514554400025704}
+  - component: {fileID: -7788655241727468581}
   m_Layer: 3
   m_Name: Wire
   m_TagString: Untagged
@@ -46,6 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009c7d55c1194d04681963728fb3e6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyParticleSystem: {fileID: 6628083487651330320, guid: b3f739df9c289654a9853a690fb44e9a, type: 3}
+  colorArr:
+  - {r: 0.25698647, g: 0.5188679, b: 0.41153944, a: 1}
+  - {r: 0.3563546, g: 0.6838702, b: 0.8301887, a: 1}
+  - {r: 0.4281618, g: 0.3372549, b: 0.78431374, a: 1}
+  - {r: 0.4745098, g: 0.8784314, b: 0.74319696, a: 1}
+  - {r: 0.26717696, g: 0.4983263, b: 0.7169812, a: 1}
+  damageColor: {r: 0.7169812, g: 0.07058824, b: 0, a: 1}
 --- !u!120 &8055795557845763377
 LineRenderer:
   serializedVersion: 2
@@ -150,7 +159,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!68 &679492563837963341
+--- !u!68 &-3849514554400025704
 EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,7 +188,7 @@ EdgeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -191,3 +200,30 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!50 &-7788655241727468581
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177496496767192064}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

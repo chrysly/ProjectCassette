@@ -47,6 +47,7 @@ MonoBehaviour:
   player: {fileID: 2493186566141159196, guid: 821317ec24b83d44fa5ba0fa35e0e22b, type: 3}
   roamer: {fileID: 5171243695975865140, guid: 391ad67794c598b418670cd3bb7daad8, type: 3}
   roamerCount: 20
+  boss: {fileID: 22447777865819093, guid: 831040b8f438d454caaf9b1c0f9ef4cd, type: 3}
   webSize: 12
   webDensity: 10
   voronoi: {fileID: 0}

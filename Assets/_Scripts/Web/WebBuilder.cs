@@ -11,6 +11,8 @@ public class WebBuilder : MonoBehaviour {
     [SerializeField] private GameObject roamer;
     [SerializeField] private int roamerCount;
     [Space]
+    [SerializeField] private GameObject boss;
+    [Space]
     [SerializeField] private int webSize;
     [SerializeField] private int webDensity;
     [SerializeField] private VoronoiController voronoi;
@@ -44,6 +46,8 @@ public class WebBuilder : MonoBehaviour {
         /// Place Player;
         GameObject playerGO = Instantiate(player, transform.position, transform.rotation);
         Web.Instance.PlacePlayer(playerGO.GetComponent<Player>());
+        /// Place Boss;
+        Instantiate(boss, Boss.RandomizeBossSpawn(), transform.rotation);
         /// Place Roamers;
         for (int i = 0; i < roamerCount; i++) {
             GameObject roamerGO = Instantiate(roamer, transform.position, transform.rotation, Web.Instance.transform);
