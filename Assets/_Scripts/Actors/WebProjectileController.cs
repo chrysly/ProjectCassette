@@ -46,7 +46,8 @@ public class WebProjectileController : MonoBehaviour {
     }
 
     private IEnumerator FireAction(Vector2 aimDirection) {
-        Instantiate(webProjectilePrefab, cassette.position, Quaternion.LookRotation(Vector3.forward, aimDirection));
+        var tape = Instantiate(webProjectilePrefab, cassette.position, Quaternion.LookRotation(Vector3.forward, aimDirection));
+        tape.transform.Rotate(new Vector3(0, 0, 90));
         yield return new WaitForSeconds(1f / fireRate);
         fireAction = null;
         yield return null;
