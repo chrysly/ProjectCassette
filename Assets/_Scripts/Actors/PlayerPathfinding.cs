@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.XPath;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerPathfinding {
@@ -34,13 +35,12 @@ public class PlayerPathfinding {
         return nodes;
     }
 
-    List<Coil> RetracePath(WebNode start, WebNode target) {
+    private List<Coil> RetracePath(WebNode start, WebNode target) {
         List<WebNode> path = new List<WebNode>();
-        path.Add(target);
         WebNode current = target;
 
-        while (current != start) {
-            path.Add(current.prev);
+        while (current.coil != start.coil) {
+            path.Add(current);
             current = current.prev;
         }
 
@@ -48,9 +48,10 @@ public class PlayerPathfinding {
         return ToCoil(path);
     }
 
+    //Nodes must be compared by grabbing their coils
     public List<Coil> FindPath(Coil start, Coil target) {
-        WebNode startNode = new WebNode(start);
-        WebNode targetNode = new WebNode(target);
+        WebNode startNode = start.node;
+        WebNode targetNode = target.node;
 
         List<WebNode> openList = new List<WebNode>();
         HashSet<WebNode> closedList = new HashSet<WebNode>();
@@ -66,24 +67,30 @@ public class PlayerPathfinding {
         startNode.hCost = CalculateDistance(startNode, targetNode);
 
         while (openList.Count > 0) {
-            WebNode curr = GetLowestFCostNode(openList);
-            if (curr == targetNode) {
-                //At final node ayo
-                return RetracePath(startNode, targetNode);
+            //WebNode curr = GetLowestFCostNode(openList);
+            WebNode curr = openList[0];
+            for (int i = 1; i < openList.Count; i++) {
+                if (openList[i].fCost < curr.fCost || Mathf.Approximately(openList[i].fCost, curr.fCost) && openList[i].hCost < curr.hCost) {
+                    curr = openList[i];
+                }
             }
-
+            
             openList.Remove(curr);
             closedList.Add(curr);
+            
+            if (curr.coil == targetNode.coil) {
+                return RetracePath(startNode, targetNode);
+            }
 
             foreach (WebNode node in GetNeightbourList(curr)) {
                 if (closedList.Contains(node)) continue;
 
                 float tempGCost = curr.gCost + CalculateDistance(curr, node);
-                if (tempGCost < node.gCost) {
-                    node.prev = node;
+                if (tempGCost < node.gCost || !openList.Contains(node)) {
                     node.gCost = tempGCost;
                     node.hCost = CalculateDistance(node, targetNode);
-
+                    node.prev = curr;
+                    
                     if (!openList.Contains(node)) {
                         openList.Add(node);
                     }
@@ -92,6 +99,7 @@ public class PlayerPathfinding {
         }
         
         //No more nodes
+        Debug.Log("No suitable paths");
         return null;
     }
 
@@ -100,14 +108,13 @@ public class PlayerPathfinding {
         foreach (Wire wire in curr.coil.wires) {
             Coil coil1 = wire.coils.coil1;
             Coil coil2 = wire.coils.coil2;
-            if (coil1.node != curr) {
+            if (coil1 == curr.coil) {
                 neightborList.Add(coil2.node);
             }
             else {
                 neightborList.Add(coil1.node);
             }
         }
-
         return neightborList;
     }
 
