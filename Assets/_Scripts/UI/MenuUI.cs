@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour {
     [SerializeField] private Transform spider;
@@ -23,6 +25,10 @@ public class MenuUI : MonoBehaviour {
     private Vector3 oldEnterTextPos;
 
     private bool inMainMenu = true;
+
+    private string username;
+
+    [SerializeField] private List<CanvasGroup> textList;
     
     // Start is called before the first frame update
     void Awake() {
@@ -43,6 +49,10 @@ public class MenuUI : MonoBehaviour {
         mainText.position = oldMainTextPos;
         textField.transform.position = oldTextFieldPos;
         enterText.position = oldEnterTextPos;
+
+        foreach (CanvasGroup text in textList) {
+            text.DOFade(0f, 0f);
+        }
     }
 
     private void Start() {
@@ -73,9 +83,28 @@ public class MenuUI : MonoBehaviour {
     {
         if (inMainMenu) {
             if (Input.GetKeyDown(KeyCode.Return)) {
-                inMainMenu = false;
-                StartCoroutine(HideAction());
+                if (textField.text != null) {
+                    inMainMenu = false;
+                    username = textField.text;
+                    textField.text = null;
+                    StartCoroutine(HideAction());
+                    StartCoroutine(ControlsDisplay());
+                }
             }
         }
+    }
+
+    private IEnumerator ControlsDisplay() {
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < textList.Count; i++) {
+            textList[i].DOFade(1f, 1f);
+            StartCoroutine(FadeOut(textList[i]));
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    private IEnumerator FadeOut(CanvasGroup text) {
+        yield return new WaitForSeconds(4f);
+        text.DOFade(0f, 1f);
     }
 }
