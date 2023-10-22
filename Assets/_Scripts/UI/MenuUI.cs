@@ -40,10 +40,10 @@ public class MenuUI : MonoBehaviour {
     }
 
     private void Shift() {
-        oldSpiderPos = new Vector3(spiderPos.x - 700, spiderPos.y, spiderPos.z);
-        oldMainTextPos = new Vector3(mainTextPos.x, mainTextPos.y + 300, mainTextPos.z);
-        oldTextFieldPos = new Vector3(textFieldPos.x, textFieldPos.y - 450, textFieldPos.z);
-        oldEnterTextPos = new Vector3(enterTextPos.x, enterTextPos.y - 400, enterTextPos.z);
+        oldSpiderPos = new Vector3(spiderPos.x - 1000, spiderPos.y, spiderPos.z);
+        oldMainTextPos = new Vector3(mainTextPos.x, mainTextPos.y + 600, mainTextPos.z);
+        oldTextFieldPos = new Vector3(textFieldPos.x, textFieldPos.y - 600, textFieldPos.z);
+        oldEnterTextPos = new Vector3(enterTextPos.x, enterTextPos.y - 500, enterTextPos.z);
 
         spider.position = oldSpiderPos;
         mainText.position = oldMainTextPos;

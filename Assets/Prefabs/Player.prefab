@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4615509413818260887}
+  - component: {fileID: 3854755371120453370}
   - component: {fileID: 4652957744412664149}
   - component: {fileID: 9066457302362481384}
   - component: {fileID: 3382476022612696856}
@@ -38,6 +39,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3854755371120453370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2493186566141159196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db64651ea1b2947448b0a5292fcc55b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  webProjectilePrefab: {fileID: 3877512903940305623, guid: e8ccf399a24e1a748b4c652b8e667410, type: 3}
+  maxFireRate: 50
+  fireRateGrowth: 2
+  fireUptimeSpeed: 0.1
+  cassette: {fileID: 4615509413818260887}
 --- !u!114 &4652957744412664149
 MonoBehaviour:
   m_ObjectHideFlags: 0

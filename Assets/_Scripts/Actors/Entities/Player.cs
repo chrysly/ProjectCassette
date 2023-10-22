@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : Entity {
 
     public List<Coil> pathfound;
+    public bool IsStopped => pathfound == null || pathfound.Count == 0;
 
     protected override void Awake() {
         base.Awake();
