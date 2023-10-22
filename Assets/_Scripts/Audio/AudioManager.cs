@@ -24,8 +24,8 @@ public class AudioManager : MonoBehaviour {
         secondaryMusicSource.gameObject.name = "SecondaryMusicSource";
         if (instance != this) {
             instance = this;
-            DontDestroyOnLoad(this);
         } else Destroy(gameObject);
+        PlayMusic("Exploration");
     }
 
     public void PlayMusic(string name) {
