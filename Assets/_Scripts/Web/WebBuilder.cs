@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class WebBuilder : MonoBehaviour {
 
+    [SerializeField] private GameObject player;
+    [Space]
+    [SerializeField] private GameObject roamer;
+    [SerializeField] private int roamerCount;
+    [Space]
     [SerializeField] private int webSize;
     [SerializeField] private int webDensity;
     [SerializeField] private VoronoiController voronoi;
@@ -32,8 +37,12 @@ public class WebBuilder : MonoBehaviour {
         foreach (Triangle3 tri in pointArr) {
             //Pass TRIANGLE2D into web, initialize coils using points and
             Web.Instance.PlaceCoils(tri);
+        } GameObject playerGO = Instantiate(player, transform.position, transform.rotation, Web.Instance.transform);
+        Web.Instance.PlaceEntity(playerGO.GetComponent<Player>());
+        for (int i = 0; i < roamerCount; i++) {
+            GameObject roamerGO = Instantiate(roamer, transform.position, transform.rotation, Web.Instance.transform);
+            Web.Instance.PlaceEntity(roamerGO.GetComponent<Roamer>());
         }
-        //Web.Instance.InitializeCoils();
     }
 
     void Update() {

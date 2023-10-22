@@ -24,7 +24,12 @@ public class Web : MonoBehaviour {
             instance = this;
         } else Destroy(gameObject);
     }
-    
+
+    public void PlaceEntity(Entity entity) {
+        Coil[] coils = coilMap.Values.ToArray();
+        entity.Init(coils[UnityEngine.Random.Range(0, coils.Length)]);
+    }
+
     private Coil PlaceCoil(Vector2 pos) {
         GameObject coilGO = Instantiate(coilPrefab, pos, transform.rotation, transform);
         Coil coil = coilGO.GetComponentInChildren<Coil>(true);
