@@ -30,7 +30,7 @@ public class Roamer : Entity {
     public IEnumerator ChooseAction() {
         var choice = Random.Range(0, 3);
         switch ((Action) choice) {
-            case Action.Wait: /// Action
+            case Action.Wait:
                 yield return new WaitForSeconds(Random.Range(0f, 2f));
                 StartCoroutine(ChooseAction());
                 break;
@@ -38,7 +38,7 @@ public class Roamer : Entity {
                 Coil target = ChooseTarget(CurrCoil);
                 locomotion.SetTargetCoil(target);
                 break;
-            case Action.Act: /// Move
+            case Action.Act:
                 /// Break a nearby web;
                 StartCoroutine(ChooseAction());
                 break;

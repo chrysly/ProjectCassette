@@ -16,6 +16,6 @@ public abstract class Entity : MonoBehaviour {
 
     public virtual void Init(Coil startingCoil) {
         CurrCoil = startingCoil;
-        locomotion.Init(startingCoil);
+        locomotion.Init(this, startingCoil);
     }
 }
